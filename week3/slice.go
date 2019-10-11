@@ -1,24 +1,38 @@
 package main
-
 import (
-    "fmt"
-    "strconv"
-    )
+	"fmt"
+	"sort"
+	"strconv"
+)
 
-func main() {
-	var input string
-	stop := false
-	sum := 0
+func main()  {
+	var count int
+	sli := make([]int, initLen, 10)
+    stop := false
+    input := ""
+
 
 	for !stop {
-	    fmt.Print("Enter a number: ")
+		fmt.Print("Enter a number: ")
 	    fmt.Scan(&input)
-	    if input == "X" {
+
+        if input == "X" {
 	        stop = true
 	    } else {
             i, _ := strconv.Atoi(input)
-            sum += i
-            fmt.Printf("New Sum: %d \n", sum)
-	    }
+            if count < 3 {
+                for idx, n := range sli {
+                    if n == 0 {
+                        sli[idx] = i
+                        break
+                    }
+                }
+                count++
+            } else {
+                sli = append(sli, i)
+            }
+            sort.Ints(sli)
+            fmt.Println(sli)
+		}
 	}
 }

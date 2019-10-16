@@ -8,7 +8,7 @@ import (
 
 func main() {
 	var count int
-	sli := make([]int, initLen, 10)
+	sli := make([]int, 3, 10)
 	stop := false
 	input := ""
 

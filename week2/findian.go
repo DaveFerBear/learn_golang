@@ -19,7 +19,7 @@ func main() {
 	b := strings.HasSuffix(lowerInput, "n")
 	c := strings.Index(lowerInput, "a") > 0
 
-	fmt.Println("%t %t %t", a,b,c)
+	fmt.Println("%t %t %t", a, b, c)
 
 	if a && b && c {
 		fmt.Println("Found!")

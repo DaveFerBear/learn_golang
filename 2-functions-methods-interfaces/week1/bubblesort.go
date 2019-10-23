@@ -19,15 +19,18 @@ func bubbleSort(sli []int) {
     }
 }
 
+SIZE := 10
+
 func main() {
-    arr := make([]int, 10)
+    // Make a slice
+    arr := make([]int, SIZE)
 
     // Read numbers into array
     var i int
-    for d:=10; d>0; d-- {
+    for d:=SIZE; d>0; d-- {
         fmt.Printf("Enter %d more integers: ", d)
 	    fmt.Scanf("%d", &i)
-	    arr[10-d] = i
+	    arr[SIZE-d] = i
     }
 
     fmt.Print("The (unsorted) numbers you entered: ")

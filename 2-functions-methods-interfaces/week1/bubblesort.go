@@ -12,16 +12,16 @@ func swap(sli []int, i int, j int) {
 func bubbleSort(sli []int) {
     for i, a := range sli {
         for j, b := range sli {
-            if i!=j && a < b {
+            if a < b {
                 swap(sli, i, j)
             }
         }
     }
 }
 
-SIZE := 10
-
 func main() {
+    SIZE := 10
+
     // Make a slice
     arr := make([]int, SIZE)
 

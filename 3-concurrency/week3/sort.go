@@ -21,8 +21,36 @@ func BubbleSort(s []int, wg *sync.WaitGroup) {
 	wg.Done()
 }
 
+// Merges an array with 2 sorted, subarrays.
+func merge(left, right []int) (result []int) {
+	result = make([]int, len(left)+len(right))
+
+	i := 0
+	for len(left) > 0 && len(right) > 0 {
+		if left[0] < right[0] {
+			result[i] = left[0]
+			left = left[1:]
+		} else {
+			result[i] = right[0]
+			right = right[1:]
+		}
+		i++
+	}
+
+	for j := 0; j < len(left); j++ {
+		result[i] = left[j]
+		i++
+	}
+
+	for j := 0; j < len(right); j++ {
+		result[i] = right[j]
+		i++
+	}
+	return result
+}
+
 func main() {
-	const ARRAY_LENGTH int = 5
+	const ARRAY_LENGTH int = 9
 
 	// Make a slice
 	arr := make([]int, ARRAY_LENGTH)
@@ -36,20 +64,26 @@ func main() {
 	fmt.Println("Unsorted Array: ")
 	fmt.Println(arr)
 
-	const NUM_THREADS int = 4
+	// SORT
 	var wg sync.WaitGroup
-	var sort_size = ARRAY_LENGTH / NUM_THREADS
-	wg.Add(NUM_THREADS)
-	for j := 0; j < NUM_THREADS; j++ {
-		if j < NUM_THREADS-1 {
+	var sort_size = ARRAY_LENGTH / 4
+	wg.Add(4)
+	for j := 0; j < 4; j++ {
+		if j < 3 {
 			go BubbleSort(arr[j*sort_size:(j+1)*sort_size], &wg)
 		} else {
 			go BubbleSort(arr[j*sort_size:], &wg) // last slice picks up the slack
 		}
 	}
-
 	wg.Wait()
 
+	// MERGE
+	l := merge(arr[:sort_size], arr[sort_size:sort_size*2])
+	r := merge(arr[sort_size*2:sort_size*3], arr[sort_size*3:])
+
+    a := append(l, r...)
+	b := merge(a[:sort_size*2], a[sort_size*2:])
+
 	fmt.Println("Sorted Array: ")
-	fmt.Println(arr)
+	fmt.Println(b)
 }
